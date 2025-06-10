@@ -1,0 +1,92 @@
+FENWICK TREE MOTIVATION
+---------------------------------------------
+
+MOTIVATION
+
+consider using a prefix sum to calculate the sum between two indices. It will be bad if we change the original array as we have to recalculate the prefix reulting in O(n) case again.
+
+
+WHAT IS A FENWICK TREE
+
+A Fenwick Tree (Also called Binary Indexed tree) is a data structure that supports sum range queries as well as setting values in a static array and getting the value of the predfix sum up osme index efficiently.
+
+fenwick tree is one based.
+
+>> each index represents  itself and 2  ^ (LSB of the index) , LSB > 0   numbers below it.
+>> if LSB = 0, then it is responsible for itself only (odd indices).
+
+
+
+TIME COMPLEXITY
+
+Construction : O(n)
+Point Update : O(log(n)) 
+Range Sum : O(log(n))
+Range Update : O(log(n))
+Adding  Index : N/A
+Removing Index : N/A
+
+
+(LSB in all algos is zero based, use one based LSB to remove the + 1)
+CONSTRUCTION
+
+Naive construction : 
+  do point updates for each index.
+    time complexity O(nlogn).
+
+Linear construction:
+  Idea: add the value in the current cell to the immediate cell that is reponsible for the index.
+
+
+vector<int> Construct (vector<int>& original_array){
+    int n = original_array.size();
+
+    vector<int> tree (original_array);
+
+    for (int i = 0; i<n; i++){
+      j = i + LSB(i) + 1;
+      if (j < n){
+        tree[j] += tree[i];
+      }
+    }
+
+    return tree;
+}
+
+
+RANGE QUERIES log(N)
+ 
+ Cascading: 
+  to find the prefix sum till index n:
+  
+
+ int prefixSum(int i){
+   sum = 0;
+   while(i != 0){
+     sum += tree[i];
+     i -= LSB(i) + 1;
+   }
+ }
+
+
+POINT UPDATES
+
+adding at index n, find all the cells whcih are responsible to 9
+>> add LSB to traverse up
+>> modify all the cells reponsible for n
+
+void pointUpdate (int i) {
+  while (i < n){
+    tree[i] += x;
+    i += LSB(i);
+  }
+}
+
+
+
+
+
+
+
+
+

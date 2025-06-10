@@ -1,0 +1,6 @@
+(a + b) mod m = ((a mod m) + (b mod m)) mod m
+(a - b) mod m = ((a mod m) - (b mod m) + m) mod m
+(a * b) mod m = ((a mod m) * (b mod m)) mod m
+a^k mod m = ((a mod m)^k) mod m
+(a / b) mod m = a * (b ^ (mod - 2))
+a^k mod m ≡ b^k mod m, if a ≡ b (mod m)

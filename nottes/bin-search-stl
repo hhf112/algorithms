@@ -1,0 +1,21 @@
+------------------------------------------------------
+boolean binary search: 
+
+bool res = binary_search(a.begin(), a.end() + n, 3);
+// uses binary search to find if 3 exists
+
+---------------------------------------------------------------
+similar to bin search: 
+
+int ind = lower_bound(a.begin(), a.end(), 4) - a.begin();
+// finds the iterator to the element (first occurance)
+// else points to next immediate greater element
+// if that also does not exist, returns a.end()
+
+int ind = upper_bound(a.begin(), a.end() + n, 4) - a.begin();
+// will return iterator to the next immediate greater element
+// if the next greater does not exist then returns a.end();
+
+----------------------------------------------------------------
+
+

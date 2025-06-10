@@ -1,0 +1,182 @@
+Topic stream #1 : Number Theory stuff
+
+GCD 
+----------------------------------------------------
+Facts
+gcd(a,b) = gcd(a-b, b) //can be applied recursively
+gcd(a-b,b) = gcd(a%b, b) // can be applied recursively
+
+
+assuming a is the greater one
+a % b < a/2 (or) a (if b > a)
+
+Algo to find gcd
+
+int gcd(int a , int b)
+{
+  if (b == 0) return a;
+  return gcd(b, a % b);
+  //assuming a is greater than b in the beginning
+  //doesn't matter as from second step onwards b will always be greater
+
+  
+}
+
+Try: Prob 1458A
+Time complexity analysis
+
+ in each step, one of our numbers lsoes half of itself.
+ for a O(log a)
+ for b O(log b)
+ atmost time complexity O(loga + logb)
+
+ also can be O(log(min(a,b)))
+
+ Highly efficient Algo
+
+applying fact gcd(a,b,c) = gcd(a, a-b, a-c) 
+gcd(a[1] + b[j], a[2] + b[j], ......., a[n] + b[j]) == gcd(a[1] + b[j], a[1] - a[2], ......,a[1] - a[n])
+== gcd(a[1] + b[j] , d)
+
+----------------------------------------------------------------
+
+ Prime nos.
+ ---------------------------------------------------------
+
+goal : to find a way to find prime nos from 1 to Number
+
+checking if a no. is prime: 
+
+if x is not prime, x can be written as  
+
+  x = a.b 
+  such that both 1<a,b<x
+
+at least one of a and b is <= sqrt(x)
+(so a.b is not greater than x)
+
+if x is not a prime no. it has a divisor from 2 to sqrt(x)
+
+O(sqrt(x)) -- time complexity of finding if x is prime or not
+
+finding the no. of prime nos from 1 to n:  
+
+for any x > 1 it's multiples are not prime
+
+consider an array of size n where arr[i] = bool (i is prime or not)
+
+initially:
+  arr[0] = false;
+  arr[1] = false;
+
+algo :
+
+for (int i = 2; i<=n; i++)
+{
+  for (int j = 2*i; j<=n; j += i)
+  {
+    prime[j] = false;
+  }
+}
+
+alternate:
+  for (int i = 2; i<= 2; i++)
+  {
+    for (j = i*i; j<=n; j+= i)
+    {
+      prime[j] = false;
+    }
+  }
+
+
+basically rule out all multiples of x where can be prime or not doesn't matter.
+
+if prime[x] remains true that means it is not a multiple of any of the former values.
+
+Time Complexity: n/2 + n/3 + n/4 ... + n/n ~= O(log(n))
+
+< Harmonic series (H(n))
+
+log(n)/2 <= H(n) <= log(n)
+
+
+-----------------
+if n is not a prime no there exists
+  x <= sqrt(n)
+  such that x is prime and
+
+  n divides x
+
+Problem : T-primes 
+
+
+----------------------------------------------------------------
+POWER
+
+a^b 
+b : even or odd
+
+int pw(int a, int b)
+{
+  if (b == 0) return 1;
+  if (b%2 == 0)
+  {
+    int ans = pw(a,b/2);
+    return 1ll*ans*ans % mod;
+  };
+  else 
+  {
+    int ans = pw(a,(b-1)/2);
+    return 1ll*ans*ans % mod * a;
+  }
+
+}
+
+Time Complexity : O(logn)
+Problem : 359C Prime Number
+---------------------------------------------------------------
+FERMAT LITTLE THEOREM
+
+assume p is a prime no.
+
+for any 1 <= a < p 
+
+for greater than p consider mod p 
+
+a can be anything other than multiple of p
+
+a^(p-1) = 1 % p
+
+or a^(p-1) - 1 is divisible by p
+=> a^p  = a % p 
+or a^p - a is divisble by p
+
+Application: 
+
+Sometimes you need to calc division but u cannot directly dividebecaue dividend is modulo something.
+
+(a/b)mod = a.b^(-1) = a.b^(-1). b^(mod - 1) 
+as b^(mod -1) mod mod  = 1 
+
+so just multiply by b^(mod -2)
+
+
+> Calculating combinations nCr
+
+cacl n! moduldo mod 
+
+assuming n! is modulo mod
+ans =  1ll * fac[n] * pw(fac[k], mod -2) % mod * pw(fac[n-k], mod - 2) % mod
+
+b^(mod -2) = inverse of b
+
+Problem: D vasily the bear and beautiful strings
+
+
+
+
+
+
+
+
+
