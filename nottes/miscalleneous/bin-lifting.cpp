@@ -1,5 +1,3 @@
-//first came accross in Dementia 2025 hosted by IIT Mandi.
-//
 #include <bits/stdc++.h>
 #include <iterator>
 using namespace std;
