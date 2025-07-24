@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 /**
  * TARJAN'S ALGORITHM: find bridges in graphs.
  * TIME COMPLEXITY: O(V + E)
@@ -24,6 +21,9 @@ using namespace std;
  *       child has only one connection to current node. This indicates child
  * and current node form a bridge.
  * */
+
+#include <bits/stdc++.h>
+using namespace std;
 
 class Tarjan {
  private:
