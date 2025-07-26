@@ -26,7 +26,7 @@
 
 class Tarjan {
  public:
-  std::vector<std::vector<int>> stronglyConnected(
+  std::vector<std::vector<int>> getBridges(
       int n, std::vector<std::vector<int>>& edges) {
     std::vector<std::vector<int>> adj;
     for (int i = 0; i < n; i++) {
@@ -64,6 +64,7 @@ class Tarjan {
   int m_timer = 1;
 };
 
+// #include <iostream>
 // int main(){
-//   cout << "compiled.\n";
+//   std::cout << "compiled.\n";
 // }

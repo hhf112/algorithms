@@ -102,5 +102,5 @@ class Trie {
 
 // #include <iostream>
 // int main() {
-//   cout << "compiled\n";
+//   std::cout << "compiled\n";
 // }

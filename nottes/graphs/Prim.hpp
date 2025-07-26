@@ -23,12 +23,12 @@
 
 class Prim {
  public:
-  int spanningTree(int V, std::vector<std::vector<int>> adj[]) {
+  int spanningTreeLength(int V, std::vector<std::vector<int>> adj[]) {
     std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>,
                    std::greater<std::pair<int, int>>>
         pq;
     std::vector<int> vis(V, 0);
-    std::vector<std::pair<int, int>> mst;
+    // std::vector<std::pair<int, int>> mst;
     pq.push({0, 0});
     int sum = 0;
 
@@ -38,7 +38,7 @@ class Prim {
       if (vis[node] == 1) continue;
       vis[node] = 1;
       sum += wt;
-      mst.emplace_back(wt, node);
+      // mst.emplace_back(wt, node);
       for (auto& x : adj[node]) {
         if (!vis[x[0]]) {
           pq.push({x[1], x[0]});
@@ -48,3 +48,9 @@ class Prim {
     return sum;
   }
 };
+
+// #include <iostream>
+// int main() {
+//   std::cout << "compiled.\n";
+//   return 0;
+// }

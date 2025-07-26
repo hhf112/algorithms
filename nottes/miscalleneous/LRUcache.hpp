@@ -16,9 +16,8 @@
  *  Store in map -> [key, address of linked-list node]
  * */
 
-#include <iostream>
-#include <optional>
-#include <unordered_map>
+#include <optional>       //std::optional
+#include <unordered_map>  // std::unordered_map
 
 template <typename K, typename V>
 struct Node {
@@ -34,9 +33,7 @@ struct Node {
 template <typename K, typename V, typename C>
 class LRUcache {
  public:
-  C capacity;
-
-  LRUcache(C capacity) : capacity{capacity} {
+  LRUcache(C capacity) : m_capacity{capacity} {
     m_head = new Node<K, V>;
     m_tail = new Node<K, V>;
     m_head->next = m_tail;
@@ -55,8 +52,8 @@ class LRUcache {
   std::optional<V> get(const K& key) {
     if (!m_cache.contains(key)) return {};
     Node<K, V>* node = m_cache[key];
-    m_detachNode(node);
-    m_insertAfterHead(node);
+    detachNode(node);
+    insertAfterHead(node);
 
     return node->value;
   }
@@ -65,40 +62,42 @@ class LRUcache {
     if (m_cache.contains(key)) {
       Node<K, V>* node = m_cache[key];
       node->value = value;
-      m_detachNode(node);
-      m_insertAfterHead(node);
+      detachNode(node);
+      insertAfterHead(node);
     } else {
-      if (m_cache.size() == capacity) {
+      if (m_cache.size() == m_capacity) {
         Node<K, V>* node = m_tail->prev;
         m_cache.erase(node->key);
-        m_detachNode(node);
+        detachNode(node);
         delete node;
       }
 
       Node<K, V>* node = new Node<K, V>(key, value);
       m_cache.emplace(key, node);
-      m_insertAfterHead(node);
+      insertAfterHead(node);
     }
   }
 
  private:
-  Node<K, V>* m_head;
-  Node<K, V>* m_tail;
-  std::unordered_map<K, Node<K, V>*> m_cache;
-
-  void m_detachNode(Node<K, V>* node) {
+  void detachNode(Node<K, V>* node) {
     node->prev->next = node->next;
     node->next->prev = node->prev;
     node->prev = nullptr;
     node->next = nullptr;
   }
 
-  void m_insertAfterHead(Node<K, V>* node) {
+  void insertAfterHead(Node<K, V>* node) {
     m_head->next->prev = node;
     node->next = m_head->next;
     node->prev = m_head;
     m_head->next = node;
   }
+
+  Node<K, V>* m_head;
+  Node<K, V>* m_tail;
+  std::unordered_map<K, Node<K, V>*> m_cache;
+  C m_capacity;
 };
 
-int main() { std::cout << "LRUcache compiled.\n"; }
+// #include <iostream>
+// int main() { std::cout << "LRUcache compiled.\n"; }
