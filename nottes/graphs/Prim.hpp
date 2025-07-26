@@ -17,18 +17,18 @@
  *  ...
  *  Greedily keep choosing the minimum edge.
  */
-
-#include <bits/stdc++.h>
-using namespace std;
+#pragma once
+#include <queue> // std::priority_queue
+#include <vector> // std::vector
 
 class Prim {
  public:
-  int spanningTree(int V, vector<vector<int>> adj[]) {
-    priority_queue<pair<int, int>, vector<pair<int, int>>,
-                   greater<pair<int, int>>>
+  int spanningTree(int V, std::vector<std::vector<int>> adj[]) {
+    std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>,
+                   std::greater<std::pair<int, int>>>
         pq;
-    vector<int> vis(V, 0);
-    vector<pair<int, int>> mst;
+    std::vector<int> vis(V, 0);
+    std::vector<std::pair<int, int>> mst;
     pq.push({0, 0});
     int sum = 0;
 
@@ -38,7 +38,6 @@ class Prim {
       if (vis[node] == 1) continue;
       vis[node] = 1;
       sum += wt;
-
       mst.emplace_back(wt, node);
       for (auto& x : adj[node]) {
         if (!vis[x[0]]) {

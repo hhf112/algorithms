@@ -32,11 +32,10 @@
 #pragma once
 #include <cmath>   // log2, ceil
 #include <vector>  // std::vector
-using namespace std;
 
 class BinLifting {
  public:
-  BinLifting(const vector<vector<int>>& adj, int N) : m_adj{adj}, m_N{N} {}
+  BinLifting(const std::vector<std::vector<int>>& adj, int N) : m_adj{adj}, m_N{N} {}
 
   int lca(int u, int v) {
     if (isAncestor(u, v)) return u;
@@ -58,7 +57,7 @@ class BinLifting {
     m_tout.resize(m_N);
     m_timer = 0;
     m_L = ceil(log2(m_N));
-    m_up.assign(m_N, vector<int>(m_L + 1));
+    m_up.assign(m_N, std::vector<int>(m_L + 1));
     dfs(root, root);
   }
 
@@ -76,9 +75,9 @@ class BinLifting {
     m_tout[node] = ++m_timer;
   }
 
-  const vector<vector<int>>& m_adj;
-  vector<vector<int>> m_up;
-  vector<int> m_tin, m_tout;
+  const std::vector<std::vector<int>>& m_adj;
+  std::vector<std::vector<int>> m_up;
+  std::vector<int> m_tin, m_tout;
   int m_N;
   int m_L;
   int m_timer;

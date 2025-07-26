@@ -1,195 +1,106 @@
-#include <bits/stdc++.h>
-using namespace std;
+#pragma once
+#include <string>  // std::std::string
+#define CHARS 26
 
-//Node of trie
-struct Node{
-  //implementation for words containing only lowercase english letters
-private:
-  Node* links[26];
-  bool flag = false;
-  int cntEndWith = 0;
-  int cntPrefix = 0;
-
-public:
-
-
-  Node(){
-    for (int i = 0; i<26; i++){
-      links[i] = NULL;
+class Node {
+ public:
+  Node() {
+    for (int i = 0; i < CHARS; i++) {
+      m_links[i] = nullptr;
     }
   }
-
-
-  bool containsKey(char ch){
-    return links[ch -'a'] != NULL;
-  }
-
-  void put(char ch, Node* node){
-    links[ch - 'a'] = node;
-  }
-
-  Node* get(char ch){
-    return links[ch - 'a'];
-  }
-
-  void setEnd(){
-    flag = true;
-  }
-
-  bool isEnd(){
-    return flag;
-  }
-
-  void increaseEnd(){
-    cntEndWith++;
-  }
-
-  void increasePrefix(){
-    cntPrefix++;
-  }
-
-  void deleteEnd(){
-    cntEndWith--;
-  }
-
-  void reducePrefix(){
-    cntPrefix--;
-  }
-
-  int getEnd(){
-    return cntEndWith;
-  }
-
-  int getPrefix(){
-    return cntPrefix;
-  }
+  bool containsKey(char ch) { return m_links[ch - 'a'] != nullptr; }
+  void put(char ch, Node* node) { m_links[ch - 'a'] = node; }
+  Node* get(char ch) { return m_links[ch - 'a']; }
+  void setEnd() { m_flag = true; }
+  bool isEnd() { return m_flag; }
+  void addCount() { m_cnt++; }
+  void addPrefix() { m_cntPrefix++; }
+  void deleteCount() { m_cnt--; }
+  void deletePrefix() { m_cntPrefix--; }
+  int getCount() { return m_cnt; }
+  int getPrefix() { return m_cntPrefix; }
+ private:
+  Node* m_links[CHARS];
+  bool m_flag = false;
+  int m_cnt = 0;
+  int m_cntPrefix = 0;
 };
 
+class Trie {
+ public:
+  Trie() { m_root = new Node(); }
 
-class Trie{
-
-private: 
-  Node* root;
-
-
-public:
-
-  /*Initialize trie*/
-  Trie(){
-    root = new Node();
-  }
-
-  // function if not including the counts
-  // //Time complexity = O(word.length())
-  // void insert(string word){
-  //   Node* node = root;
-  //
-  //   for (int i = 0; i<word.length(); i++){
-  //     if (!node->containsKey(word[i])){
-  //       node->put(word[i], new Node());
-  //     }
-  //
-  //     //move to the ref trie
-  //     node->get(word[i]);
-  //   }
-  //
-  //   //final flag is turned to true
-  //   node->setEnd();
-  // }
-  //
-
-  void insert(string word){
-    Node* node = root;
-
-    for (int i = 0; i<word.length(); i++){
-      if (!node->containsKey(word[i])){
+  void insert(std::string word) {
+    Node* node = m_root;
+    for (int i = 0; i < word.length(); i++) {
+      if (!node->containsKey(word[i])) {
         node->put(word[i], new Node);
       }
-
-      node->get(word[i]);
-      node->increasePrefix();
+      node = node->get(word[i]);
+      node->addPrefix();
     }
-
-    node->increaseEnd();
-
+    node->addCount();
   }
-  
 
-
-
-  //Time complexity = O(word.length())
-  bool search(string word){
-    Node* node = root;
-
-    for (int i = 0; i<word.length(); i++){
-      if (!node->containsKey(word[i])) 
-        return false;
-
+  bool search(std::string word) {
+    Node* node = m_root;
+    for (int i = 0; i < word.length(); i++) {
+      if (!node->containsKey(word[i])) return false;
       node = node->get(word[i]);
     }
-
-    //check if final flag is true
     return node->isEnd();
   }
 
-  //
-  //Time complexity = O(prefix.length())
-  bool startsWith(string prefix){
-    Node* node = root;
+  int count(std::string prefix) {
+    Node* node = m_root;
+    for (int i = 0; i < prefix.length(); i++) {
+      if (node->containsKey(prefix[i])) {
+        node = node->get(prefix[i]);
+      } else {
+        return 0;
+      }
+    }
+    return node->getCount();
+  }
 
-    for (int i = 0; i<prefix.length(); i++){
-      if (!node->containsKey(prefix[i]))
-        return false;
-
+  bool hasPrefix(std::string prefix) {
+    Node* node = m_root;
+    for (int i = 0; i < prefix.length(); i++) {
+      if (!node->containsKey(prefix[i])) return false;
       node = node->get(prefix[i]);
     }
-
     return true;
-  } 
+  }
 
-  int countWordsEqualTo (string prefix){
-    Node* node = root;
-
-    for (int i = 0; i<prefix.length(); i++){
-      if (node->containsKey(prefix[i])){
-        node->get(prefix[i]);
-      }
-      else{
+  int countPrefix(std::string prefix) {
+    Node* node = m_root;
+    for (int i = 0; i < prefix.length(); i++) {
+      if (node->containsKey(prefix[i])) {
+        node = node->get(prefix[i]);
+      } else {
         return 0;
       }
     }
-
-    return  node->getEnd();
-
+    return node->getPrefix();
   }
 
-
-  int countStartingWith(string prefix){    
-    Node* node = root;
-
-    for (int i = 0; i<prefix.length(); i++){
-      if (node->containsKey(prefix[i])){
-        node->get(prefix[i]);
+  void erase(std::string word) {
+    Node* node = m_root;
+    for (int i = 0; i < word.length(); i++) {
+      if (node->containsKey(word[i])) {
+        node = node->get(word[i]);
+        node->deletePrefix();
       }
-      else{
-        return 0;
-      }
-    }
-
-    return  node->getPrefix();
-  }
-
-
-  void erase(string word){
-    Node* node = root;
-
-    for (int i = 0; i<word.length(); i++){
-      if (node->containsKey(word[i])){
-        node->get(word[i]);
-        node->reducePrefix();
-      }
-
-      node->deleteEnd();
+      node->deleteCount();
     }
   }
+
+ private:
+  Node* m_root;
 };
+
+// #include <iostream>
+// int main() {
+//   cout << "compiled\n";
+// }

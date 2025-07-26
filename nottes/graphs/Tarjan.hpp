@@ -21,46 +21,47 @@
  *       child has only one connection to current node. This indicates child
  * and current node form a bridge.
  * */
-
-#include <bits/stdc++.h>
-using namespace std;
+#pragma once
+#include <vector>  // std::vector
 
 class Tarjan {
- private:
-  int timer = 1;
-
-  void dfs(int node, int parent, vector<int>& vis, vector<vector<int>>& adj,
-           vector<int>& tim, vector<int>& low, vector<vector<int>>& bridges) {
-    vis[node] = 1;
-    tim[node] = low[node] = timer;
-    timer++;
-    for (const auto& it : adj[node]) {
-      if (it == parent) continue;
-      if (!vis[it]) {
-        dfs(it, node, vis, adj, tim, low, bridges);
-        low[node] = min(low[node], low[it]);
-        if (low[it] > tim[node]) {
-          bridges.push_back({node, it});
-        }
-      } else {
-        low[node] = min(low[node], low[it]);
-      }
-    }
-  }
-
  public:
-  vector<vector<int>> stronglyConnected(int n, vector<vector<int>>& edges) {
-    vector<vector<int>> adj;
+  std::vector<std::vector<int>> stronglyConnected(
+      int n, std::vector<std::vector<int>>& edges) {
+    std::vector<std::vector<int>> adj;
     for (int i = 0; i < n; i++) {
       adj[edges[i][0]].push_back(edges[i][1]);
       adj[edges[i][1]].push_back(edges[i][0]);
     }
-    vector<int> vis(n, 0), tim(n), low(n);
-    vector<vector<int>> bridges;
+    std::vector<int> vis(n, 0), tim(n), low(n);
+    std::vector<std::vector<int>> bridges;
     dfs(0, -1, vis, adj, tim, low, bridges);
 
     return bridges;
   }
+
+ private:
+  void dfs(int node, int parent, std::vector<int>& vis,
+           std::vector<std::vector<int>>& adj, std::vector<int>& tim,
+           std::vector<int>& low, std::vector<std::vector<int>>& bridges) {
+    vis[node] = 1;
+    tim[node] = low[node] = m_timer;
+    m_timer++;
+    for (const auto& it : adj[node]) {
+      if (it == parent) continue;
+      if (!vis[it]) {
+        dfs(it, node, vis, adj, tim, low, bridges);
+        low[node] = std::min(low[node], low[it]);
+        if (low[it] > tim[node]) {
+          bridges.push_back({node, it});
+        }
+      } else {
+        low[node] = std::min(low[node], low[it]);
+      }
+    }
+  }
+
+  int m_timer = 1;
 };
 
 // int main(){
