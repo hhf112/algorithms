@@ -12,10 +12,13 @@ using namespace std;
 
 // 2. Using 2 stacks
 
-struct TreeNode {};
+struct TreeNode {
+  TreeNode* left;
+  TreeNode* right;
+};
 
-vector<int> postOrderTraversal (TreeNode* root) {
-  vector<int> postOrder;
+vector<TreeNode*> postOrderTraversal (TreeNode* root) {
+  vector<TreeNode*> postOrder;
   if (root == NULL) return postOrder;
   stack<TreeNode*> st1, st2;
   st1.push(root);
@@ -27,7 +30,7 @@ vector<int> postOrderTraversal (TreeNode* root) {
     if (root->left) 
       st1.push(root->left);
     if (root->right)
-      st1.push(root->right)
+      st1.push(root->right);
   }
 
   while (!st2.empty()){
@@ -35,7 +38,7 @@ vector<int> postOrderTraversal (TreeNode* root) {
     st2.pop();
   }
 
-  return postOrder;
+  return std::move(postOrder);
 }
 
 vector<int> inOrderIt (Node* root) {
