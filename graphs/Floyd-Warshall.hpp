@@ -22,7 +22,7 @@ class FloydWarshall {
 
 public:
   //done in place
-  void shortest_distance(vector<vector<int>>& matrix) {
+  inline void shortest_distance(vector<vector<int>>& matrix) {
     int n = matrix.size();
 
     //initialzie ditances

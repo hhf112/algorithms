@@ -15,7 +15,7 @@ class Articulation {
   //  -->separte consideration for the start of the graph
 
  public:
-  vector<int> findArticulation(int n, vector<vector<int>>& adj) {
+  inline vector<int> findArticulation(int n, vector<vector<int>>& adj) {
     vector<int> vis(n, 0), tim(n), low(n), mark(n, 0);
     for (int i = 0; i < n; i++) {
       if (!vis[i]) dfs(i, -1, tim, low, vis, mark, adj);
@@ -31,8 +31,9 @@ class Articulation {
   }
 
  private:
-  void dfs(int node, int parent, vector<int>& tim, vector<int>& low,
-           vector<int>& vis, vector<int>& mark, vector<vector<int>>& adj) {
+  inline void dfs(int node, int parent, vector<int>& tim, vector<int>& low,
+                  vector<int>& vis, vector<int>& mark,
+                  vector<vector<int>>& adj) {
     vis[node] = 1;
     tim[node] = low[node] = m_timer;
     m_timer++;

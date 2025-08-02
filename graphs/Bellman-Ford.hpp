@@ -12,7 +12,7 @@ class BellmanFord{
   //
   // O(V x E)
   vector<int> 
-  bellman_ford(int V, vector<vector<int>>& edges, int S){
+  inline bellman_ford(int V, vector<vector<int>>& edges, int S){
     //inital distances array
     vector<int> dist(V, 1e9);
     dist[S] = 0;

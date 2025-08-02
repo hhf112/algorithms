@@ -35,7 +35,8 @@
 
 class BinLifting {
  public:
-  BinLifting(const std::vector<std::vector<int>>& adj, int N) : m_adj{adj}, m_N{N} {}
+  BinLifting(const std::vector<std::vector<int>>& adj, int N)
+      : m_adj{adj}, m_N{N} {}
 
   int lca(int u, int v) {
     if (isAncestor(u, v)) return u;
@@ -48,11 +49,11 @@ class BinLifting {
     return m_up[u][0];
   }
 
-  bool isAncestor(int u, int v) {
+  inline bool isAncestor(int u, int v) {
     return m_tin[u] <= m_tin[v] && m_tout[u] >= m_tout[v];
   }
 
-  void preprocess(int root) {
+  inline void preprocess(int root) {
     m_tin.resize(m_N);
     m_tout.resize(m_N);
     m_timer = 0;
@@ -62,7 +63,7 @@ class BinLifting {
   }
 
  private:
-  void dfs(int node, int parent) {
+  inline void dfs(int node, int parent) {
     m_tin[node] = ++m_timer;
     m_up[node][0] = parent;
 

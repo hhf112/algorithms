@@ -23,7 +23,7 @@
 
 class Prim {
  public:
-  int spanningTreeLength(int V, std::vector<std::vector<int>> adj[]) {
+  inline int spanningTreeLength(int V, std::vector<std::vector<int>> adj[]) {
     std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>,
                    std::greater<std::pair<int, int>>>
         pq;

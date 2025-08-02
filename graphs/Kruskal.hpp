@@ -20,7 +20,7 @@ class Kruskal {
   // form a loop. (use dsu to check the loop if they belong to the same
   // component)
  public:
-  int spanningTree(int V, std::vector<std::vector<int>> adj[]) {
+  inline int spanningTree(int V, std::vector<std::vector<int>> adj[]) {
     std::vector<std::pair<int, std::pair<int, int>>> edges;
     for (int i = 0; i < V; i++) {
       for (auto it : adj[i]) {

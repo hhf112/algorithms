@@ -26,7 +26,7 @@
 
 class Tarjan {
  public:
-  std::vector<std::vector<int>> getBridges(
+  inline std::vector<std::vector<int>> getBridges(
       int n, std::vector<std::vector<int>>& edges) {
     std::vector<std::vector<int>> adj;
     for (int i = 0; i < n; i++) {
@@ -41,7 +41,7 @@ class Tarjan {
   }
 
  private:
-  void dfs(int node, int parent, std::vector<int>& vis,
+  inline void dfs(int node, int parent, std::vector<int>& vis,
            std::vector<std::vector<int>>& adj, std::vector<int>& tim,
            std::vector<int>& low, std::vector<std::vector<int>>& bridges) {
     vis[node] = 1;

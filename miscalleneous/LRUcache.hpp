@@ -49,7 +49,7 @@ class LRUcache {
     }
   }
 
-  std::optional<V> get(const K& key) {
+  inline std::optional<V> get(const K& key) {
     if (!m_cache.contains(key)) return {};
     Node<K, V>* node = m_cache[key];
     detachNode(node);
@@ -58,7 +58,7 @@ class LRUcache {
     return node->value;
   }
 
-  void put(const K& key, const V& value) {
+  inline void put(const K& key, const V& value) {
     if (m_cache.contains(key)) {
       Node<K, V>* node = m_cache[key];
       node->value = value;
@@ -79,14 +79,14 @@ class LRUcache {
   }
 
  private:
-  void detachNode(Node<K, V>* node) {
+  inline void detachNode(Node<K, V>* node) {
     node->prev->next = node->next;
     node->next->prev = node->prev;
     node->prev = nullptr;
     node->next = nullptr;
   }
 
-  void insertAfterHead(Node<K, V>* node) {
+  inline void insertAfterHead(Node<K, V>* node) {
     m_head->next->prev = node;
     node->next = m_head->next;
     node->prev = m_head;

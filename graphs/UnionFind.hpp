@@ -11,14 +11,14 @@ class UnionFind {
     }
   }
 
-  int find(int u) {
+  inline int find(int u) {
     if (u == m_parent[u])
       return u;
     else
       return m_parent[u] = find(m_parent[u]);
   }
 
-  bool unite(int u, int v) {
+  inline bool unite(int u, int v) {
     int up = find(u), vp = find(v);
     if (up == vp) return false;
 

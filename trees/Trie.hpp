@@ -2,24 +2,25 @@
 #include <string>  // std::std::string
 #define CHARS 26
 
-class Node {
+struct Node {
  public:
   Node() {
     for (int i = 0; i < CHARS; i++) {
       m_links[i] = nullptr;
     }
   }
-  bool containsKey(char ch) { return m_links[ch - 'a'] != nullptr; }
-  void put(char ch, Node* node) { m_links[ch - 'a'] = node; }
-  Node* get(char ch) { return m_links[ch - 'a']; }
-  void setEnd() { m_flag = true; }
-  bool isEnd() { return m_flag; }
-  void addCount() { m_cnt++; }
-  void addPrefix() { m_cntPrefix++; }
-  void deleteCount() { m_cnt--; }
-  void deletePrefix() { m_cntPrefix--; }
-  int getCount() { return m_cnt; }
-  int getPrefix() { return m_cntPrefix; }
+  inline bool containsKey(char ch) { return m_links[ch - 'a'] != nullptr; }
+  inline void put(char ch, Node* node) { m_links[ch - 'a'] = node; }
+  inline Node* get(char ch) { return m_links[ch - 'a']; }
+  inline void setEnd() { m_flag = true; }
+  inline bool isEnd() { return m_flag; }
+  inline void addCount() { m_cnt++; }
+  inline void addPrefix() { m_cntPrefix++; }
+  inline void deleteCount() { m_cnt--; }
+  inline void deletePrefix() { m_cntPrefix--; }
+  inline int getCount() { return m_cnt; }
+  inline int getPrefix() { return m_cntPrefix; }
+
  private:
   Node* m_links[CHARS];
   bool m_flag = false;
@@ -31,7 +32,7 @@ class Trie {
  public:
   Trie() { m_root = new Node(); }
 
-  void insert(std::string word) {
+  inline void insert(std::string word) {
     Node* node = m_root;
     for (int i = 0; i < word.length(); i++) {
       if (!node->containsKey(word[i])) {
@@ -43,7 +44,7 @@ class Trie {
     node->addCount();
   }
 
-  bool search(std::string word) {
+  inline bool search(std::string word) {
     Node* node = m_root;
     for (int i = 0; i < word.length(); i++) {
       if (!node->containsKey(word[i])) return false;
@@ -52,7 +53,7 @@ class Trie {
     return node->isEnd();
   }
 
-  int count(std::string prefix) {
+  inline int count(std::string prefix) {
     Node* node = m_root;
     for (int i = 0; i < prefix.length(); i++) {
       if (node->containsKey(prefix[i])) {
@@ -64,7 +65,7 @@ class Trie {
     return node->getCount();
   }
 
-  bool hasPrefix(std::string prefix) {
+  inline bool hasPrefix(std::string prefix) {
     Node* node = m_root;
     for (int i = 0; i < prefix.length(); i++) {
       if (!node->containsKey(prefix[i])) return false;
@@ -73,7 +74,7 @@ class Trie {
     return true;
   }
 
-  int countPrefix(std::string prefix) {
+  inline int countPrefix(std::string prefix) {
     Node* node = m_root;
     for (int i = 0; i < prefix.length(); i++) {
       if (node->containsKey(prefix[i])) {
@@ -85,7 +86,7 @@ class Trie {
     return node->getPrefix();
   }
 
-  void erase(std::string word) {
+  inline void erase(std::string word) {
     Node* node = m_root;
     for (int i = 0; i < word.length(); i++) {
       if (node->containsKey(word[i])) {
